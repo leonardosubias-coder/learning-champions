@@ -405,7 +405,8 @@ body {
 .section {
   display: none;
   flex: 1;
-  padding: 2rem 2.5rem 3rem;
+  padding: 2rem 2rem 3rem;
+  max-width: 860px;
   width: 100%;
 }
 .section.active { display: block; }
@@ -1105,91 +1106,7 @@ body {
   .cert-grid { grid-template-columns: 1fr; }
 }
 
-/* ─── Training Tracker ───────────────────────────────── */
-.training-overview {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.training-ov-week { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; box-shadow: var(--shadow); }
-.training-ov-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-.training-ov-label span { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: 0; text-transform: none; }
-.training-ov-bar-wrap { height: 6px; background: #f0f0f5; border-radius: 10px; overflow: hidden; }
-.training-ov-bar { height: 100%; border-radius: 10px; width: 0%; transition: width 0.6s ease; }
-
-.training-week-block { margin-bottom: 1.75rem; }
-.training-week-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 1rem 1.25rem;
-  border-radius: var(--radius) var(--radius) 0 0;
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  background: var(--surface);
-}
-.training-week-header.collapsed { border-radius: var(--radius); border-bottom: 1px solid var(--border); }
-.training-week-icon { font-size: 20px; flex-shrink: 0; }
-.training-week-title { font-size: 14px; font-weight: 700; color: var(--text); flex: 1; }
-.training-week-badge {
-  font-size: 11px; font-weight: 600; padding: 3px 10px;
-  border-radius: 20px; flex-shrink: 0;
-}
-.training-week-chevron { color: var(--label); transition: transform 0.2s; flex-shrink: 0; }
-.training-week-header.collapsed .training-week-chevron { transform: rotate(-90deg); }
-.training-week-progress-mini { font-size: 11px; font-weight: 700; flex-shrink: 0; }
-
-.training-task-list {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: none;
-  border-radius: 0 0 var(--radius) var(--radius);
-  overflow: hidden;
-}
-.training-task-list.collapsed { display: none; }
-
-.training-task-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 1.25rem;
-  border-bottom: 1px solid #f0f0f5;
-  transition: background 0.1s;
-}
-.training-task-item:last-child { border-bottom: none; }
-.training-task-item:hover { background: #fafbff; }
-.training-task-num { font-size: 10px; color: var(--hint); font-weight: 600; min-width: 22px; flex-shrink: 0; text-align: right; }
-.training-task-check {
-  width: 17px; height: 17px; flex-shrink: 0;
-  accent-color: var(--accent); cursor: pointer;
-}
-.training-task-label { font-size: 13.5px; color: var(--text); flex: 1; line-height: 1.4; }
-.training-task-label.done { color: var(--label); text-decoration: line-through; }
-
-.training-feedback-section {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.5rem;
-  margin-top: 0.5rem;
-  box-shadow: var(--shadow);
-}
-.training-feedback-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-.training-feedback-card { display: flex; flex-direction: column; gap: 6px; }
-.training-feedback-label { font-size: 11px; font-weight: 600; color: var(--label); text-transform: uppercase; letter-spacing: 0.05em; }
-.training-feedback-input {
-  padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
-  font-size: 15px; font-weight: 700; font-family: var(--sans);
-  color: var(--accent); outline: none; text-align: center;
-  transition: border-color 0.15s;
-}
-.training-feedback-input:focus { border-color: var(--accent); }
-
-@media (max-width: 768px) {
-  .training-overview { grid-template-columns: 1fr; }
-  .training-feedback-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-
+@media print {
   .sidebar, .topbar, .config-card, .controls, .error-banner, .page-header { display: none !important; }
   .main { margin-left: 0; }
   .section { padding: 0; }
@@ -1587,7 +1504,7 @@ body {
       </div>
     </section>
 
-    <!-- ── TRAINING ── -->
+    <!-- ── CERTIFICACIONES ── -->
     <section class="section" id="section-certificaciones">
       <div class="page-header">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
@@ -1595,55 +1512,17 @@ body {
             <h1 class="page-title">Training</h1>
             <p class="page-subtitle" id="cert-subtitle">Tu progreso en el programa de training Darwin AI.</p>
           </div>
+          <!-- Trainer: selector de trainee -->
           <div id="cert-trainee-selector" style="display:none;">
-            <select id="cert-user-select" onchange="loadTrainingForUser(this.value)" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--sans);outline:none;">
+            <select id="cert-user-select" onchange="loadCertForUser(this.value)" style="padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:var(--sans);outline:none;">
               <option value="">— Seleccionar trainee —</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- Progress overview bar -->
-      <div class="training-overview" id="training-overview">
-        <div class="training-ov-week" id="ov-w1">
-          <div class="training-ov-label">Semana 1 <span id="ov-w1-pct">0%</span></div>
-          <div class="training-ov-bar-wrap"><div class="training-ov-bar" id="ov-w1-bar" style="background:#3B5BFC"></div></div>
-        </div>
-        <div class="training-ov-week" id="ov-w2">
-          <div class="training-ov-label">Semana 2 <span id="ov-w2-pct">0%</span></div>
-          <div class="training-ov-bar-wrap"><div class="training-ov-bar" id="ov-w2-bar" style="background:#2ecc71"></div></div>
-        </div>
-        <div class="training-ov-week" id="ov-w3">
-          <div class="training-ov-label">Semana 3 <span id="ov-w3-pct">0%</span></div>
-          <div class="training-ov-bar-wrap"><div class="training-ov-bar" id="ov-w3-bar" style="background:#f39c12"></div></div>
-        </div>
-      </div>
-
-      <!-- Week blocks -->
-      <div id="training-weeks"></div>
-
-      <!-- Feedback por semana -->
-      <div class="training-feedback-section" id="training-feedback-wrap">
-        <div class="training-week-title" style="margin-bottom:1rem;">📝 Feedback por Semana</div>
-        <div class="training-feedback-grid">
-          <div class="training-feedback-card">
-            <div class="training-feedback-label">W1 — Score</div>
-            <input class="training-feedback-input" id="fb-w1" type="number" min="1" max="5" step="0.1" placeholder="1–5" onchange="saveFeedback('w1', this.value)">
-          </div>
-          <div class="training-feedback-card">
-            <div class="training-feedback-label">W2 — Score</div>
-            <input class="training-feedback-input" id="fb-w2" type="number" min="1" max="5" step="0.1" placeholder="1–5" onchange="saveFeedback('w2', this.value)">
-          </div>
-          <div class="training-feedback-card">
-            <div class="training-feedback-label">W3 — Score</div>
-            <input class="training-feedback-input" id="fb-w3" type="number" min="1" max="5" step="0.1" placeholder="1–5" onchange="saveFeedback('w3', this.value)">
-          </div>
-          <div class="training-feedback-card">
-            <div class="training-feedback-label">Final Grade</div>
-            <input class="training-feedback-input" id="fb-fg" type="number" min="1" max="5" step="0.1" placeholder="1–5" onchange="saveFeedback('fg', this.value)">
-          </div>
-        </div>
-      </div>
+      <!-- Cert cards grid -->
+      <div class="cert-grid" id="cert-grid"></div>
 
     </section>
 
@@ -1685,14 +1564,14 @@ async function getUserData(uid) {
       name: auth.currentUser.displayName || auth.currentUser.email.split('@')[0],
       photoURL: auth.currentUser.photoURL || null,
       role: 'trainee',
-      training: {},
+      certifications: { core: { status:'locked', progress:0 }, cs: { status:'locked', progress:0 }, advanced: { status:'locked', progress:0 }, professional: { status:'locked', progress:0 } },
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
     await db.collection('users').doc(uid).set(newUser);
     return newUser;
   } catch(e) {
     console.error('Firestore error:', e);
-    return { role: 'trainee', training: {} };
+    return { role: 'trainee', certifications: {} };
   }
 }
 
@@ -1766,8 +1645,7 @@ async function handleLogin(user) {
   hideAuthScreen();
   const userData = await getUserData(user.uid);
   applyRole(userData.role);
-  currentUserCerts = userData || {};
-  trainingData = userData.training || {};
+  currentUserCerts = userData.certifications || {};
   renderCertificaciones();
   loadTrainees();
 }
@@ -2598,235 +2476,84 @@ function escapeHtml(str) {
 }
 
 /* ════════════════════════════════════════════
-   TRAINING TRACKER
+   CERTIFICACIONES
 ════════════════════════════════════════════ */
+let currentUserCerts = {};
+let allUsersCache = [];
 
-const TRAINING_WEEKS = [
-  {
-    id: 'w1', label: 'Semana 1', icon: '🏅', color: '#3B5BFC', bgLight: '#eef0ff',
-    tasks: [
-      { id: 1,  text: 'Create new AI Worker' },
-      { id: 2,  text: 'Create/edit Pipelines' },
-      { id: 3,  text: 'LLMs performance differences' },
-      { id: 4,  text: 'Conditionals prompting' },
-      { id: 5,  text: 'Create/edit Custom Fields' },
-      { id: 6,  text: 'Create/edit Follow-Up sequences' },
-      { id: 7,  text: 'Create/edit Knowledge Base fields' },
-      { id: 8,  text: 'Personality prompt templates' },
-      { id: 9,  text: 'Multi-language prompting' },
-      { id: 10, text: 'Add/edit files to the Knowledge Base' },
-      { id: 11, text: 'Create/edit Product Catalogs' },
-      { id: 12, text: 'Tool implementation prompting' },
-      { id: 13, text: 'Turn features on/off' },
-      { id: 14, text: 'Create/edit Users' },
-      { id: 15, text: 'Create/edit User Teams' },
-      { id: 16, text: 'User types' },
-      { id: 17, text: 'Agent version rollback' },
-      { id: 18, text: 'Search/Review Conversations' },
-      { id: 19, text: 'Conversation/Contacts filters' },
-    ]
-  },
-  {
-    id: 'w2', label: 'Semana 2', icon: '🎯', color: '#2ecc71', bgLight: '#edfaf1',
-    tasks: [
-      { id: 20, text: 'Welcome Calls hosting' },
-      { id: 21, text: 'Onboarding Calls hosting' },
-      { id: 22, text: 'MBR Calls hosting' },
-      { id: 23, text: 'Status Calls hosting' },
-      { id: 24, text: 'Criteria for customer launching' },
-      { id: 25, text: 'Hubspot for the Ops Team' },
-      { id: 26, text: 'Review/fix feedbacks' },
-      { id: 27, text: 'Churned/Churn Risk customers processes' },
-      { id: 28, text: 'Customer Retention strategies' },
-      { id: 29, text: 'Upsell strategies' },
-      { id: 30, text: 'Darwin AI pricing' },
-      { id: 31, text: 'Request new features' },
-      { id: 32, text: 'Escalate Meta-related issues' },
-      { id: 33, text: 'Escalate product-related issues' },
-      { id: 34, text: 'Escalate customer feedbacks' },
-      { id: 35, text: 'Setup new channel' },
-      { id: 36, text: 'WhatsApp: API - Coexistance' },
-      { id: 37, text: 'Solve Meta-related issues' },
-      { id: 38, text: 'Create/edit message templates' },
-      { id: 39, text: 'Feature restrictions through various channels' },
-      { id: 40, text: 'Setup custom UTMs' },
-    ]
-  },
-  {
-    id: 'w3', label: 'Semana 3', icon: '⚡', color: '#f39c12', bgLight: '#fff8ec',
-    tasks: [
-      { id: 41, text: 'Create/edit Zapier automations' },
-      { id: 42, text: 'Create/edit Albato automations' },
-      { id: 43, text: 'Create/edit MCPs' },
-      { id: 44, text: 'Create/edit HTTP Requests' },
-      { id: 45, text: 'Default metrics dashboard' },
-      { id: 46, text: 'Custom metrics dashboard' },
-      { id: 47, text: 'Human Intervention metrics' },
-      { id: 48, text: 'Pipeline metrics' },
-      { id: 49, text: 'Feedback implementation metrics' },
-      { id: 50, text: 'Human Intervention' },
-      { id: 51, text: 'Manual Transfers' },
-      { id: 52, text: 'Conversations Audit process' },
-      { id: 53, text: 'Worker Auto-testing' },
-      { id: 54, text: 'Create/review Outbound Campaigns' },
-      { id: 55, text: 'Setup TTS (Text To Speech)' },
-      { id: 56, text: 'Setup AI Calls phone number' },
-    ]
-  }
-];
+function statusLabel(s) {
+  return { locked:'Bloqueada', in_progress:'En progreso', completed:'Completada' }[s] || s;
+}
 
-let currentTrainingUid = null;
-let trainingData = {}; // { taskId: true/false, feedback: { w1, w2, w3, fg } }
+function renderCertCard(def, certData, editable) {
+  const status   = certData?.status || 'locked';
+  const progress = certData?.progress || 0;
+  const color    = def.color;
+  const bgLight  = color + '18';
 
-function renderTrainingWeeks() {
-  const container = document.getElementById('training-weeks');
-  const isEditable = (currentRole === 'trainer' || currentRole === 'admin') || true; // trainees can also check their own
+  const badge = `<span class="cert-status-badge ${status}">${statusLabel(status)}</span>`;
 
-  container.innerHTML = TRAINING_WEEKS.map(week => {
-    const done = week.tasks.filter(t => trainingData[`task_${t.id}`]).length;
-    const total = week.tasks.length;
-    const pct = total ? Math.round((done / total) * 100) : 0;
+  const progressBar = `
+    <div class="cert-progress-wrap">
+      <div class="cert-progress-header">
+        <span class="cert-progress-label">Progreso</span>
+        <span class="cert-progress-pct">${progress}%</span>
+      </div>
+      <div class="cert-progress-bar-wrap">
+        <div class="cert-progress-bar" style="width:${progress}%;background:${color}"></div>
+      </div>
+    </div>`;
 
-    let badgeStyle = `background:${week.bgLight};color:${week.color}`;
-    let badgeText = pct === 100 ? '✅ Completada' : pct > 0 ? '🔄 En progreso' : '⏳ Pendiente';
-
-    const taskRows = week.tasks.map(t => {
-      const checked = trainingData[`task_${t.id}`] ? 'checked' : '';
-      const doneClass = trainingData[`task_${t.id}`] ? 'done' : '';
-      return `
-        <div class="training-task-item">
-          <span class="training-task-num">${t.id}</span>
-          <input type="checkbox" class="training-task-check" ${checked}
-            onchange="toggleTask('${week.id}', ${t.id}, this.checked)">
-          <span class="training-task-label ${doneClass}">${escapeHtml(t.text)}</span>
-        </div>`;
-    }).join('');
-
-    return `
-      <div class="training-week-block">
-        <div class="training-week-header" id="whdr-${week.id}" onclick="toggleWeekCollapse('${week.id}')">
-          <span class="training-week-icon">${week.icon}</span>
-          <span class="training-week-title">${week.label}</span>
-          <span class="training-week-badge" style="${badgeStyle}">${badgeText}</span>
-          <span class="training-week-progress-mini" style="color:${week.color}">${done}/${total}</span>
-          <svg class="training-week-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6l4 4 4-4"/></svg>
-        </div>
-        <div class="training-task-list" id="wlist-${week.id}">
-          ${taskRows}
-        </div>
+  let actions = '';
+  if (editable) {
+    actions = `
+      <div class="cert-actions">
+        <input type="range" min="0" max="100" value="${progress}" style="flex:1;accent-color:${color}"
+               oninput="updateCertProgress('${def.id}', this.value, '${color}')"
+               onchange="saveCertProgress('${def.id}', this.value)">
+        <select class="role-select" style="flex:0 0 auto" onchange="saveCertStatus('${def.id}', this.value)">
+          <option value="locked"      ${status==='locked'?'selected':''}>🔒 Bloqueada</option>
+          <option value="in_progress" ${status==='in_progress'?'selected':''}>🔄 En progreso</option>
+          <option value="completed"   ${status==='completed'?'selected':''}>✅ Completada</option>
+        </select>
       </div>`;
-  }).join('');
-
-  updateOverviewBars();
-}
-
-function updateOverviewBars() {
-  TRAINING_WEEKS.forEach(week => {
-    const done = week.tasks.filter(t => trainingData[`task_${t.id}`]).length;
-    const pct = Math.round((done / week.tasks.length) * 100);
-    const barEl = document.getElementById(`ov-${week.id}-bar`);
-    const pctEl = document.getElementById(`ov-${week.id}-pct`);
-    if (barEl) barEl.style.width = pct + '%';
-    if (pctEl) pctEl.textContent = pct + '%';
-  });
-}
-
-function toggleWeekCollapse(weekId) {
-  const hdr = document.getElementById(`whdr-${weekId}`);
-  const list = document.getElementById(`wlist-${weekId}`);
-  hdr.classList.toggle('collapsed');
-  list.classList.toggle('collapsed');
-}
-
-async function toggleTask(weekId, taskId, checked) {
-  const uid = currentTrainingUid || currentUser?.uid;
-  if (!uid) return;
-
-  trainingData[`task_${taskId}`] = checked;
-
-  // Update the label style immediately
-  const checkbox = document.querySelector(`input[onchange="toggleTask('${weekId}', ${taskId}, this.checked)"]`);
-  if (checkbox) {
-    const label = checkbox.nextElementSibling;
-    if (label) { checked ? label.classList.add('done') : label.classList.remove('done'); }
+  } else if (status === 'completed') {
+    actions = `<div class="cert-actions"><button class="cert-btn cert-btn-primary" onclick="downloadCert('${def.id}')">⬇ Descargar certificado</button></div>`;
+  } else {
+    actions = `<div class="cert-actions"><button class="cert-btn cert-btn-secondary" disabled>${status === 'locked' ? '🔒 Aún no disponible' : '🔄 En progreso…'}</button></div>`;
   }
 
-  // Recalculate badge + progress for this week
-  const week = TRAINING_WEEKS.find(w => w.id === weekId);
-  if (week) {
-    const done = week.tasks.filter(t => trainingData[`task_${t.id}`]).length;
-    const total = week.tasks.length;
-    const pct = Math.round((done / total) * 100);
-    const hdr = document.getElementById(`whdr-${weekId}`);
-    if (hdr) {
-      const badge = hdr.querySelector('.training-week-badge');
-      const prog = hdr.querySelector('.training-week-progress-mini');
-      if (badge) badge.textContent = pct === 100 ? '✅ Completada' : pct > 0 ? '🔄 En progreso' : '⏳ Pendiente';
-      if (prog) prog.textContent = `${done}/${total}`;
-    }
-  }
-  updateOverviewBars();
-
-  try {
-    await db.collection('users').doc(uid).update({ [`training.task_${taskId}`]: checked });
-  } catch(e) { console.error(e); }
+  return `
+    <div class="cert-card ${status}" style="--cert-color:${color}">
+      <div class="cert-header">
+        <div class="cert-icon" style="background:${bgLight}">${def.icon}</div>
+        <div class="cert-meta">
+          <div class="cert-name">${def.title}</div>
+          <div class="cert-weeks">${def.weeks}</div>
+        </div>
+        ${badge}
+      </div>
+      <div class="cert-desc">${def.desc}</div>
+      ${progressBar}
+      ${actions}
+    </div>`;
 }
 
-async function saveFeedback(key, value) {
-  const uid = currentTrainingUid || currentUser?.uid;
-  if (!uid) return;
-  trainingData[`feedback_${key}`] = parseFloat(value) || null;
-  try {
-    await db.collection('users').doc(uid).update({ [`training.feedback_${key}`]: parseFloat(value) || null });
-  } catch(e) { console.error(e); }
-}
-
-function loadFeedbackInputs() {
-  ['w1','w2','w3','fg'].forEach(k => {
-    const el = document.getElementById(`fb-${k}`);
-    if (el) el.value = trainingData[`feedback_${k}`] || '';
-  });
-}
-
-function renderCertificaciones() {
-  // Load training data for current user
-  currentTrainingUid = null;
+function renderCertificaciones(certsData, editable) {
+  const certs = certsData || currentUserCerts;
   const isTrainer = currentRole === 'trainer' || currentRole === 'admin';
+  const isEditing = editable !== undefined ? editable : false;
+
+  document.getElementById('cert-grid').innerHTML = CERT_DEFS.map(def =>
+    renderCertCard(def, certs[def.id], isEditing)
+  ).join('');
 
   if (isTrainer) {
     document.getElementById('cert-trainee-selector').style.display = '';
     document.getElementById('cert-subtitle').textContent = 'Selecciona un trainee para ver y gestionar su training.';
     loadUsersForSelector();
-    // Show empty state until a trainee is selected
-    trainingData = {};
-    renderTrainingWeeks();
-    loadFeedbackInputs();
-  } else {
-    // Trainee: load their own data
-    trainingData = currentUserCerts.training || {};
-    renderTrainingWeeks();
-    loadFeedbackInputs();
   }
 }
-
-async function loadTrainingForUser(uid) {
-  if (!uid) {
-    currentTrainingUid = null;
-    trainingData = {};
-    renderTrainingWeeks();
-    loadFeedbackInputs();
-    return;
-  }
-  currentTrainingUid = uid;
-  const user = allUsersCache.find(u => u.uid === uid);
-  if (!user) return;
-  trainingData = user.training || {};
-  renderTrainingWeeks();
-  loadFeedbackInputs();
-}
-
-let currentUserCerts = {};
-let allUsersCache = [];
 
 async function loadUsersForSelector() {
   try {
@@ -2838,6 +2565,107 @@ async function loadUsersForSelector() {
         `<option value="${u.uid}">${escapeHtml(u.name || u.email)}</option>`
       ).join('');
   } catch(e) { console.error(e); }
+}
+
+async function loadCertForUser(uid) {
+  if (!uid) {
+    document.getElementById('cert-grid').innerHTML = CERT_DEFS.map(def => renderCertCard(def, {}, false)).join('');
+    return;
+  }
+  const user = allUsersCache.find(u => u.uid === uid);
+  if (!user) return;
+  const certs = user.certifications || {};
+  document.getElementById('cert-grid').innerHTML = CERT_DEFS.map(def =>
+    renderCertCard(def, certs[def.id], true)
+  ).join('');
+  // Store current editing uid
+  document.getElementById('cert-grid').dataset.editingUid = uid;
+}
+
+async function saveCertProgress(certId, value) {
+  const uid = document.getElementById('cert-grid').dataset.editingUid || currentUser?.uid;
+  if (!uid) return;
+  try {
+    await db.collection('users').doc(uid).update({
+      [`certifications.${certId}.progress`]: parseInt(value)
+    });
+    // Update local cache
+    const u = allUsersCache.find(u => u.uid === uid);
+    if (u) { if(!u.certifications) u.certifications = {}; if(!u.certifications[certId]) u.certifications[certId] = {}; u.certifications[certId].progress = parseInt(value); }
+  } catch(e) { console.error(e); }
+}
+
+async function saveCertStatus(certId, status) {
+  const uid = document.getElementById('cert-grid').dataset.editingUid || currentUser?.uid;
+  if (!uid) return;
+  const update = { [`certifications.${certId}.status`]: status };
+  if (status === 'completed') update[`certifications.${certId}.completedAt`] = firebase.firestore.FieldValue.serverTimestamp();
+  try {
+    await db.collection('users').doc(uid).update(update);
+    const u = allUsersCache.find(u => u.uid === uid);
+    if (u) { if(!u.certifications) u.certifications = {}; if(!u.certifications[certId]) u.certifications[certId] = {}; u.certifications[certId].status = status; }
+  } catch(e) { console.error(e); }
+}
+
+function updateCertProgress(certId, value, color) {
+  // Live update the bar and pct without saving
+  const grid = document.getElementById('cert-grid');
+  const cards = grid.querySelectorAll('.cert-card');
+  const idx = CERT_DEFS.findIndex(d => d.id === certId);
+  if (idx < 0) return;
+  const bar = cards[idx].querySelector('.cert-progress-bar');
+  const pct = cards[idx].querySelector('.cert-progress-pct');
+  if (bar) bar.style.width = value + '%';
+  if (pct) pct.textContent = value + '%';
+}
+
+function downloadCert(certId) {
+  if (!window.jspdf?.jsPDF) { alert('PDF library not loaded.'); return; }
+  const def = CERT_DEFS.find(d => d.id === certId);
+  const userName = currentUser?.displayName || currentUser?.email || 'Trainee';
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'mm', format:'a4', orientation:'landscape' });
+  const W = 297, H = 210;
+
+  // Background
+  doc.setFillColor(238,240,255); doc.rect(0,0,W,H,'F');
+  doc.setFillColor(59,91,252); doc.rect(0,0,W,18,'F');
+  doc.setFillColor(59,91,252); doc.rect(0,H-18,W,18,'F');
+
+  // Header
+  doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(11);
+  doc.text('Darwin A\u0131 · Learning Champions', 14, 11);
+  doc.text(new Date().toLocaleDateString('es-PE',{year:'numeric',month:'long',day:'numeric'}), W-14, 11, {align:'right'});
+
+  // Body
+  doc.setTextColor(10,10,26);
+  doc.setFont('helvetica','normal'); doc.setFontSize(14);
+  doc.text('Este certificado acredita que', W/2, 60, {align:'center'});
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(32);
+  doc.setTextColor(59,91,252);
+  doc.text(userName, W/2, 85, {align:'center'});
+
+  doc.setFont('helvetica','normal'); doc.setFontSize(14);
+  doc.setTextColor(10,10,26);
+  doc.text('ha completado satisfactoriamente el programa', W/2, 102, {align:'center'});
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(22);
+  doc.setTextColor(59,91,252);
+  doc.text(def.title, W/2, 120, {align:'center'});
+
+  doc.setFont('helvetica','normal'); doc.setFontSize(12);
+  doc.setTextColor(107,111,138);
+  doc.text(def.weeks + ' · Darwin AI Learning Champions Program', W/2, 133, {align:'center'});
+
+  // Divider
+  doc.setDrawColor(200,205,255); doc.line(60, 143, W-60, 143);
+
+  // Footer
+  doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(10);
+  doc.text('Darwin AI · Certificado Oficial', W/2, H-7, {align:'center'});
+
+  doc.save(`Certificado_${def.id}_${userName.replace(/\s+/g,'_')}.pdf`);
 }
 
 async function loadRolesSection() {
